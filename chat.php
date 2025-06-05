@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Time Chat app</title>
+    <title><?php $_GET["room"] ?></title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -12,18 +12,18 @@
     <script src="https://unpkg.com/hyperscript.org@0.9.14"></script>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </head>
-<body class="w-screen h-screen overflow-hidden font-[Poppins] bg-gradient-to-l from-blue-200 to-blue-100 p-10 flex flex-col min-h-screen justify-center items-center ">
-    <h2 class="-mt-2 mb-4 text-xl font-semibold text-blue-900 "><?php echo $_GET["room"] ." room"?></h2>
-    <main class="bg-white shadow-2xl rounded-md 
+<body class="w-screen h-screen overflow-hidden font-[Poppins] bg-gradient-to-l from-blue-200 to-blue-100 p-10 flex flex-col min-h-screen justify-start items-center ">
+    <!-- <h2 class=" mb-4 text-xl font-semibold text-blue-900 "><?php echo $_GET["room"] ." room"?></h2> -->
+    <main class=" mb-10 bg-white shadow-2xl rounded-md 
     w-[330px] h-full
     md:w-[500px] md:w-[700px]
-    lg:w-full lg:w-full
+    lg:h-full lg:w-full
     flex flex-col">
         <!-- messages of the group chat -->
        
             <a href="index.php"> <button class="w-[60px] h-[30px] bg-blue-300 rounded m-2 p-1"><i class="fa-solid fa-arrow-left text-white "></i></button></a>
         
-        <div class="flex-1 " id="messages-container">
+        <div class="flex-1 overflow-auto" id="messages-container">
         <!-- list messages -->
                 <?php 
                 if($_SERVER["REQUEST_METHOD"] == "GET"){
