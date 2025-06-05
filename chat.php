@@ -12,9 +12,9 @@
     <script src="https://unpkg.com/hyperscript.org@0.9.14"></script>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </head>
-<body class="w-screen h-screen overflow-hidden font-[Poppins] bg-gradient-to-l from-blue-200 to-blue-100 p-10 flex flex-col min-h-screen justify-center items-center">
-    <h2><?php echo $_GET["room"]?></h2>
-    <main class=" bg-white shadow-2xl rounded-md 
+<body class="w-screen h-screen overflow-hidden font-[Poppins] bg-gradient-to-l from-blue-200 to-blue-100 p-10 flex flex-col min-h-screen justify-center items-center ">
+    <h2 class="-mt-2 mb-4 text-xl font-semibold text-blue-900 "><?php echo $_GET["room"] ." room"?></h2>
+    <main class="bg-white shadow-2xl rounded-md 
     w-[330px] h-full
     md:w-[500px] md:w-[700px]
     lg:w-full lg:w-full
