@@ -6,12 +6,16 @@
             $formattedDate = date('d/m/y H:i', $currentTimestamp);
             $author = $_POST["author"];
             $message = $_POST["message"];
-            $file = fopen("messages.txt", "a");
+            $room = $_POST["room"];
+            $dirrectory = "rooms/". $room . ".txt";
+            echo $dirrectory;
+            $file = fopen($dirrectory, "a");
             
             $text = "\n{$author}|{$message}|{$formattedDate}|";
             fwrite($file, $text);
             fclose($file);
-            header("Location: index.php");
+            header("Location: chat.php?username={$author}&room={$room}");
+            exit;
         }
     }
 ?>
