@@ -5,7 +5,7 @@
     }
 </style>
 
-<div class=" mx-3 my-6 break-words text-xs font-medium">
+<div class=" mx-3 my-6 break-words text-xs font-medium" data-message="true">
     <div class=" flex items-start  ">
         <div class="border min-w-8 min-h-8 rounded-full mx-2"></div>
         <div class=" w-9/10">

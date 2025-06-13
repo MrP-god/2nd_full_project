@@ -32,6 +32,7 @@
             <!-- list messages -->
                 <script>
                     const messageContainer = document.getElementById("messages-container");
+                    let messageCount = 0;
 
                     fetch("api/get-message.php?room=<?php echo $_GET['room'] ?>")
                             .then(response =>{
@@ -42,6 +43,7 @@
 
                                 // console.log(data);
                                 messageContainer.innerHTML = data;
+                                messageCount = messageContainer.querySelectorAll("[data-message]").length;
                                 // Wait for DOM to update
                                 setTimeout(() => {
                                     messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -50,25 +52,31 @@
                             .catch(error => console.error(error));
                     // fetching new messages
                     
+                    console.log("messages on client: ", messageCount);
+                    
                     setInterval(() => {
-                        fetch("api/get-new-messages.php?room=<?php echo $_GET['room'] ?>")
-                            .then(response =>{
-                                // console.log(response.text());
+                        
+                        fetch(`api/get-new-messages.php?room=<?php echo $_GET['room'] ?>&message_count=${messageCount}`)
+                            .then(response => {
                                 return response.text();
                             })
-                            .then(data=>{
-                                if(data.trim() !== ""){
-                                    // console.log(data);
-                                    messageContainer.insertAdjacentHTML("beforeend", data);
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-
-                                    // Wait for DOM to update
-                                    setTimeout(() => {
-                                        messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    }, 50);
+                            .then(text => {
+                                console.log('Got text:', text);
+                                if(text !== ""){
+                                    if(text.trim().length > 0){
+                                        messageContainer.insertAdjacentHTML("beforeend", text);
+                                        messageCount = messageContainer.querySelectorAll("[data-message]").length;
+                                        console.log("messages on client: ", messageCount);
+                                        setTimeout(() => {
+                                            messageContainer.scrollTop = messageContainer.scrollHeight;
+                                        }, 50);
+                                    }  
                                 }
+                                
                             })
-                            .catch(error => console.error(error));
+                            .catch(error => {
+                                console.error('Caught error:', error); // Make sure this is here
+                            });
                     }, 3000);
                 </script>
                 
@@ -77,15 +85,15 @@
             <section>
             <!-- write message -->
                     <div class="flex h-15" >
-                        <div class="flex bg-blue-100 w-full px-3 m-2 rounded-full">
-                            <button @click="open = !open" class="text-xl"><i class="fa-regular fa-face-smile"></i></button>
-                            <form action="api/send-message.php" method="post" class="w-full">
+                        <form action="api/send-message.php" method="post" class="w-full flex items-center gap-2 p-2">
+                            <div class="flex bg-blue-100 w-full px-3 rounded-full">
+                                <button @click="open = !open" class="text-xl"><i class="fa-regular fa-face-smile"></i></button>
                                 <input type="hidden" name="author" value="<?php echo $_GET["username"]?>">
                                 <input type="hidden" name="room" value="<?php echo $_GET["room"]?>">
                                 <input id="message-input" type="text" name="message" placeholder="message" required class="w-full p-2 outline-none">
-                                <input type="submit" value="Send" class="hidden">
-                            </form>
-                        </div>    
+                            </div>
+                            <button type="submit" value="Send" class=" bg-blue-300  rounded-full p-2 px-3"><i class="fa-solid fa-paper-plane"></i></button>
+                        </form>  
                     </div>
             </section>
             <section x-show="open" @click.outside="open = false" class="w-full h-4/10 flex flex-col ">
@@ -95,6 +103,7 @@
                             document.addEventListener("DOMContentLoaded", ()=>{
                                 // create elements
                                 const emojiPicker = document.getElementById("emoji-container");
+                                
 
                                 // fetch emojies and display them in grid
                                 fetch("api/retrive-emoji.php")
@@ -109,7 +118,7 @@
 
                                             const categoryTitle = document.createElement("p");
                                             categoryTitle.id = `emoji-${key}`;
-                                            console.log(categoryTitle.id);
+                                            // console.log(categoryTitle.id);
                                             
                                             categoryTitle.className = "mx-2 my-3 font-semibold text-sm";
                                             categoryTitle.textContent = key;
@@ -121,12 +130,23 @@
                                                 const emoji = document.createElement("span");
                                                 emoji.className = "text-3xl hover:bg-gray-200 rounded-md cursor-pointer"
                                                 emoji.textContent = item;
+                                                
                                                 EmojiContainer.appendChild(emoji); 
                                             });;
                                             emojiPicker.appendChild(EmojiContainer);
                                         });
                                     })
                                     .catch(error => console.error(error));
+                                });
+
+                                //listen for which emoji is clicked 
+                                const messageInput = document.getElementById("message-input");
+                                
+                                document.getElementById("emoji-container").addEventListener("click", event =>{
+                                    const emojiSpan = event.target.closest('span');
+                                    if (emojiSpan) {
+                                        messageInput.value += emojiSpan.textContent;
+                                    }
                                 });
                          </script>
                     </div>
@@ -139,6 +159,7 @@
                         <a href="#emoji-Travel"><i class="fa-solid fa-car"></i></a>
                         <a href="#emoji-Objects"><i class="fa-solid fa-lightbulb"></i></a>
                         <a href="#emoji-Symbols"><i class="fa-solid fa-icons"></i></a>
+
                     </div>
             </section>
         </main>

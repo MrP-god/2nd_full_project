@@ -3,26 +3,44 @@ include '../utility/utilFunctions.php';
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
     $roomName = $_GET["room"];
-    if(isset($_GET["room"])){
-        $file = fopen("../rooms/{$roomName}.txt", "r");
-        if($file){
-            $lastLine = "";
-            while(($line = fgets($file)) !== false){
-                $lastLine = $line;
-            }
-            $parts = explode("|",$lastLine);
-            if(count($parts) >= 3){
-                list($author, $message, $timestamp) = $parts;
-                $color = getUserColor($author);
-                $messageWithLinks = replaceLinks($message);
+    $clientMessagesCount = $_GET["message_count"];
+    $messagsSent = 0;
 
-                ob_start();
-                include "../message-template.php";
-                $template = ob_get_clean();
+    if(isset($_GET["room"])){
+        $filePath = "../rooms/{$roomName}.txt";
+
+        if(file_exists($filePath)){
+
+            $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            $totalMessages = count($lines);
+            
+            if($clientMessagesCount < $totalMessages){
+                error_log("client messages: ". $clientMessagesCount. " Server Messages: ". $totalMessages. " -> SENDING NEW MESSAGES");
+                $newMessages = [];
+
+                for($i = $clientMessagesCount; $i < $totalMessages; $i++){
+                    $line = $lines[$i];
+                    $parts = explode("|", $line);
+                    $messagsSent++;
+
+                    if(count($parts) >= 3){
+
+                        list($author, $message, $timestamp) = $parts;
+                        $color  = getUserColor($author);
+                        $messageWithLinks = replaceLinks($message);
+                        
+                        // open message template
+                        ob_start();
+                        include "../message-template.php";
+                        $newMessages[] = ob_get_clean();
+                    }
+                }
+                echo implode("", $newMessages);  
+                error_log("new messages sent: ". $messagsSent);
             }
-            fclose($file); 
         }
     }
     exit;
 }
+    
 ?>
