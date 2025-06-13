@@ -85,9 +85,12 @@
             <section>
             <!-- write message -->
                     <div class="flex h-15" >
-                        <form action="api/send-message.php" method="post" class="w-full flex items-center gap-2 p-2">
+                        <form 
+                        hx-post="api/send-message.php" 
+                        hx-swap="none"  
+                        hx-on::after-request="document.getElementById('message-input').value=''" class="w-full flex items-center gap-2 p-2">
                             <div class="flex bg-blue-100 w-full px-3 rounded-full">
-                                <button @click="open = !open" class="text-xl"><i class="fa-regular fa-face-smile"></i></button>
+                                <button type="button" @click="open = !open" class="text-xl"><i class="fa-regular fa-face-smile"></i></button>
                                 <input type="hidden" name="author" value="<?php echo $_GET["username"]?>">
                                 <input type="hidden" name="room" value="<?php echo $_GET["room"]?>">
                                 <input id="message-input" type="text" name="message" placeholder="message" required class="w-full p-2 outline-none">

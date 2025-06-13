@@ -22,6 +22,7 @@
                 <button type="submit" name="room" value="general" class=" p-3 rounded-md bg-blue-200 border border-blue-500 text-blue-400 font-semibold">general Room</button>
                 <button type="submit" name="room" value="gaming" class=" p-3 rounded-md bg-blue-200 border border-blue-500 text-blue-400 font-semibold">gaming Room</button>
                 <button type="submit" name="room" value="coding" class=" p-3 rounded-md bg-blue-200 border border-blue-500 text-blue-400 font-semibold">coding Room</button>
+                <button type="submit" name="room" value="testing" class="text-yellow-700 p-3 rounded-md bg-yellow-200 border border-yellow-500 text-yellow-400 font-semibold">testing Room</button>
             </div>
             
         </form>

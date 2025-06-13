@@ -1,0 +1,17 @@
+Artiom PC|welcome!!|12/06/25 18:55|
+Artiom|from here , i have a working basic working chat |13/06/25 17:49|
+Artiom|the natural progression for my goal is to make x user group chats , 1. so i need first ti implement users |13/06/25 17:50|
+Artiom phone|Cool|13/06/25 15:54|
+Artiom phone|😎😎😎|13/06/25 15:54|
+Artiom|yo nice|13/06/25 15:56|
+Artiom|cool|13/06/25 15:56|
+Artiom|cool|13/06/25 16:06|
+Artiom|mhh htmx is strange|13/06/25 16:07|
+Artiom|test|13/06/25 16:15|
+Artiom|nice|13/06/25 16:15|
+Artiom|🙃🙃🙃🙃🙃🙃but is slow to display the text|13/06/25 16:16|
+Artiom|with emoji not?|13/06/25 16:16|
+Artiom|no ok now works|13/06/25 16:16|
+Artiom phone|Kinda of|13/06/25 16:16|
+Artiom phone|😅😅😅|13/06/25 16:16|
+Artiom|😀|13/06/25 16:17|
