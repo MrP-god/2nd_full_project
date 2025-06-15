@@ -8,7 +8,6 @@
             $message = $_POST["message"];
             $room = $_POST["room"];
             $dirrectory = "../rooms/". $room . ".txt";
-            echo $dirrectory;
             $file = fopen($dirrectory, "a");
             
             $text = "\n{$author}|{$message}|{$formattedDate}|";

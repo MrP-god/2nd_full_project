@@ -12,4 +12,25 @@
         return $newText;
     }
 
+    // return the array with the lines of the txt.file given the path
+    function getFileArray($filePath){
+        if(file_exists($filePath)){
+            $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            return $lines;
+        } 
+    }
+
+    // $divider is the character used to divid line data inside txt
+    function checkUsernameExists($users, $targetUsername) {
+        foreach($users as $user) {
+            $parts = explode("|", $user);
+            $username = $parts[0] ?? ''; // Only care about first part
+            
+            if($targetUsername == $username) {
+                return false; // Username exists
+            }
+        }
+        return true; // Username is new
+    }
+
 ?>
