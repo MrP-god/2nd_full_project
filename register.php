@@ -19,7 +19,7 @@
                 $hashPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
                 
                 $file = fopen($usersPath, "a");
-                $line = "{$currentUsername}|{$hashPassword}|{$currentTime}|{$currentTime}|\n";
+                $line = "{$currentUsername}|{$hashPassword}|{$currentTime}|{$currentTime}\n";
 
                 fwrite($file, $line);
                 fclose($file);

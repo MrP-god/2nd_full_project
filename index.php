@@ -22,7 +22,7 @@
             <a href="register.php">[Register]</a>
             <a href="login.php">[login]</a>
         <?php else: ?>
-            <button hx-trigger="click" hx-post="api/logout.php" class="text-red-700">[Logout]</button>
+            <button hx-trigger="click" hx-post="api/logout.php" class="">[Logout]</button>
         <?php endif; ?>
         
     </header>

@@ -23,3 +23,9 @@ guest|nice test|16/06/25 18:19|
 test|cool now i can login and create accounts without problems|16/06/25 18:20|test|hello there this is my message|16/06/25 19:01|
 test|lets try againh|16/06/25 19:03|
 test|lest try again agin|16/06/25 19:04|
+guest|testing message as guest|17/06/25 17:26|
+test2|nice one|17/06/25 17:35|
+test2|cool|17/06/25 17:36|
+test2|not so fast|17/06/25 17:36|
+test2|why is so slow|17/06/25 17:36|
+test2|Yooo cool|17/06/25 17:37|
