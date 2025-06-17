@@ -1,1 +1,2 @@
-test|$2y$10$Dsr5LjLQQ9ZB9dI3bdjf2uM9mLZiPLkjk7KcmiC5hXiPR.jOo6SlG|1750023205|1750023205|
+username|password|creationAccount|last_activity|
+test|$2y$10$Dsr5LjLQQ9ZB9dI3bdjf2uM9mLZiPLkjk7KcmiC5hXiPR.jOo6SlG|1750023205|1750093442|

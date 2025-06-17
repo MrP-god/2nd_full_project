@@ -1,19 +1,26 @@
 <?php
-    
+    session_start();
+    include "../utility/utilFunctions.php";
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        if(isset($_POST["author"]) && isset($_POST["message"])){
+        if(isset($_POST["message"])){
+
             $currentTimestamp = time();
             $formattedDate = date('d/m/y H:i', $currentTimestamp);
-            $author = $_POST["author"];
+            // TODO: add here activity time update
+            $author = $_SESSION["username"];
             $message = $_POST["message"];
             $room = $_POST["room"];
             $dirrectory = "../rooms/". $room . ".txt";
             $file = fopen($dirrectory, "a");
             
-            $text = "\n{$author}|{$message}|{$formattedDate}|";
+            $text = "{$author}|{$message}|{$formattedDate}|\n";
             fwrite($file, $text);
             fclose($file);
-            header("Location: ../chat.php?username={$author}&room={$room}");
+            if($_SESSION["username"] !== "guest"){
+                saveLastActivityUser($_SESSION["username"],"../db/users.txt");
+            }
+            header("Location: ../chat.php?&room={$room}");
             exit;
         }
     }

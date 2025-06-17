@@ -27,7 +27,9 @@
         }else{
             // save username in session and redirect to index page
             $_SESSION["username"] = $username;
-            $_SESSION["logged_in"] = true;
+            $_SESSION["logged"] = true;
+            $_SESSION["last_activity"] = time();//this is for usavbility
+            saveLastActivityUser($_SESSION["username"],"../db/users.txt"); //this is for keeping track in case it log and stop using without logout
             header("Location: index.php");
         }
     }
