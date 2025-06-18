@@ -29,7 +29,7 @@
             $_SESSION["username"] = $username;
             $_SESSION["logged"] = true;
             $_SESSION["last_activity"] = time();//this is for usavbility
-            saveLastActivityUser($_SESSION["username"],"../db/users.txt"); //this is for keeping track in case it log and stop using without logout
+            saveLastActivityUser($_SESSION["username"],"db/users.txt"); //this is for keeping track in case it log and stop using without logout
             header("Location: index.php");
         }
     }

@@ -11,7 +11,7 @@
             $author = $_SESSION["username"];
             $message = $_POST["message"];
             $room = $_POST["room"];
-            $dirrectory = "../rooms/". $room . ".txt";
+            $dirrectory = "../db/rooms/". $room . ".txt";
             $file = fopen($dirrectory, "a");
             
             $text = "{$author}|{$message}|{$formattedDate}|\n";

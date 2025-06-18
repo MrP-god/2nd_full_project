@@ -7,7 +7,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     $messagsSent = 0;
 
     if(isset($_GET["room"])){
-        $filePath = "../rooms/{$roomName}.txt";
+        $filePath = "../db/rooms/{$roomName}.txt";
 
         if(file_exists($filePath)){
 

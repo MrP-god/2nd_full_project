@@ -15,8 +15,10 @@
                 // if new username with same password - save them into db + redirect to login
 
                 $currentTime = time();
-
                 $hashPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+                // create last_read txt            
+                file_put_contents("db/user_Activity/". $currentUsername . "_last_read.txt", "");
                 
                 $file = fopen($usersPath, "a");
                 $line = "{$currentUsername}|{$hashPassword}|{$currentTime}|{$currentTime}\n";

@@ -1,3 +1,16 @@
+<?php
+include "utility/unread-functions.php";
+session_start();
+    // every time a user enter the room , it save the time to the his userActivity folder
+    if($_SESSION["username"] !== "guest"){
+        saveActivityUser($_GET["room"], "db/user_Activity/". $_SESSION["username"] ."_last_read.txt");
+    }
+   
+
+
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

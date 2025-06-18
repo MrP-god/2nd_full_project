@@ -5,7 +5,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["room"])){
     $roomName = $_GET["room"];
     $messages = "";
     $chatUsers = [];
-    $file = fopen("../rooms/{$roomName}.txt", "r");
+    $file = fopen("../db/rooms/{$roomName}.txt", "r");
     if($file){
         while(($line = fgets($file)) !== false){
             $parts = explode("|",$line);
