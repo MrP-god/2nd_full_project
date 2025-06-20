@@ -1,6 +1,9 @@
 <?php
     session_start();
     include "../utility/utilFunctions.php";
+    include "../utility/unread-functions.php";
+
+
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["message"])){
@@ -17,8 +20,11 @@
             $text = "{$author}|{$message}|{$formattedDate}|\n";
             fwrite($file, $text);
             fclose($file);
+            // if($_SESSION["username"] !== "guest"){
+            //     saveLastActivityUser($_SESSION["username"],"../db/users.txt");
+            // }
             if($_SESSION["username"] !== "guest"){
-                saveLastActivityUser($_SESSION["username"],"../db/users.txt");
+                saveActivityUser($_GET["room"], "db/user_Activity/". $_SESSION["username"] ."_last_read.txt");
             }
             header("Location: ../chat.php?&room={$room}");
             exit;

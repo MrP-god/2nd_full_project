@@ -60,7 +60,7 @@ session_start();
                                 // Wait for DOM to update
                                 setTimeout(() => {
                                     messageContainer.scrollTop = messageContainer.scrollHeight;
-                                }, 50);
+                                }, 500);
                             })
                             .catch(error => console.error(error));
                     // fetching new messages
@@ -90,7 +90,7 @@ session_start();
                             .catch(error => {
                                 console.error('Caught error:', error); // Make sure this is here
                             });
-                    }, 3000);
+                    }, 500);
                 </script>
                 
             </div>

@@ -43,35 +43,36 @@
 
                 <!-- here i have to loop all the rooms, x guest and user , ok how to differentialt rooms for each user  -->
 
-
                 <?php foreach($cleanRooms as $room): ?>
-                    <button class="w-full pl-5 p-3 grid  grid-cols-6 grid-rows-2 hover:bg-yellow-100" 
+                    <button class="w-full pl-5 p-3 grid  grid-cols-6 grid-rows-2 hover:bg-yellow-100 rounded-md" 
                     type="submit" name="room" value="<?= htmlspecialchars($room) ?>">
-                        <p class=" col-span-5 row-span-2 font-bold tracking-tighter flex justify-start items-center">
-                            <span>
-                                <?= htmlspecialchars($room) ?>
-                            </span>
-                        </p>
-                        <!-- <div class=" row-start-2 col-span-5"></div> -->
+                        <p class=" col-span-5 row-span-2 font-bold tracking-tighter flex justify-start items-center"><span><?= htmlspecialchars($room) ?></span></p>
                         <div class=" text-xs"> 12:33</div>
-                        <div class="flex justify-center items-center">
-                            <div class="flex justify-center items-center text-[11px] rounded-full border text-white font-bold bg-blue-600 w-[22px] h-[22px]">3</div>
+                        <div id="unread-<?php echo $room ?>" class="flex justify-center items-center text-black">
                         </div>
-                        
                     </button>
                 <?php endforeach; ?>
 
-                
-
-
-                
-                
-                <!-- <div class="flex flex-col gap-3">
-                    <button type="submit" name="room" value="general" class=" p-3 rounded-md bg-blue-200 border border-blue-500 text-blue-400 font-semibold">general Room</button>
-                    <button type="submit" name="room" value="gaming" class=" p-3 rounded-md bg-blue-200 border border-blue-500 text-blue-400 font-semibold">gaming Room</button>
-                    <button type="submit" name="room" value="coding" class=" p-3 rounded-md bg-blue-200 border border-blue-500 text-blue-400 font-semibold">coding Room</button>
-                    <button type="submit" name="room" value="testing" class="text-yellow-700 p-3 rounded-md bg-yellow-200 border border-yellow-500 text-yellow-400 font-semibold">testing Room</button>
-                </div> -->
+                <script>
+                    const rooms = <?php echo json_encode($cleanRooms); ?>;
+                    let unreadList = [];
+                    // every 3ms do an ajax call to check if user has new message 
+                    setInterval(() => {
+                        rooms.forEach((room) => {
+                            fetch(`api/unread-messages.php?room=${room}`)
+                            .then(response => {return response.text();})
+                            .then(text =>{
+                                if(text > 0){
+                                    document.getElementById(`unread-${room}`).textContent = text;
+                                }
+                                unreadList.push(text);
+                            })
+                            .catch(error => console.error(error));
+                        });
+                        console.log(unreadList);
+                        unreadList = [];
+                    }, 500);
+                </script>
             </form>
         </main>
     </div>

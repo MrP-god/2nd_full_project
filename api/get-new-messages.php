@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
             $totalMessages = count($lines);
             
             if($clientMessagesCount < $totalMessages){
-                error_log("client messages: ". $clientMessagesCount. " Server Messages: ". $totalMessages. " -> SENDING NEW MESSAGES");
+                // error_log("client messages: ". $clientMessagesCount. " Server Messages: ". $totalMessages. " -> SENDING NEW MESSAGES");
                 $newMessages = [];
 
                 for($i = $clientMessagesCount; $i < $totalMessages; $i++){

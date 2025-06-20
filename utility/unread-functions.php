@@ -1,5 +1,4 @@
 <?php
-
 function saveActivityUser($room , $filePath){
     // save into the file path , the room he is in and the time in unix
     // 1. find the room line inside the file, 
