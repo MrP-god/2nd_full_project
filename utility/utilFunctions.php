@@ -4,6 +4,37 @@
         $hash = md5($author);
         return sprintf('#%06X', hexdec(substr($hash, 0, 6)) % 0x400000 + 0x400000);
     }
+    function getBgColor($author) {
+        // Tailwind color options (excluding neutral colors for better variety)
+        $colors = [
+            'red', 'orange', 'amber', 'yellow', 'lime', 'green', 
+            'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 
+            'violet', 'purple', 'fuchsia', 'pink', 'rose'
+        ];
+        
+        // Weight options (300-900 in steps of 100)
+        $weights = [100, 200, 300];
+        
+        // Use hash of username to always get same color for same user
+        $hash = md5($author);
+        
+        // Convert first 8 characters of hash to integer for better distribution
+        $hashInt = hexdec(substr($hash, 0, 8));
+        
+        // Select color and weight based on hash
+        $colorIndex = $hashInt % count($colors);
+        $weightIndex = ($hashInt >> 8) % count($weights);
+        
+        $color = $colors[$colorIndex];
+        $weight = $weights[$weightIndex];
+        
+        return "bg-{$color}-{$weight}";
+    }
+
+    function getProfileColor($author){
+        $hash = md5($author);
+
+    }
 
     function replaceLinks($text){
         $pattern = '/(https?:\/\/[^\s]+)/';
@@ -48,5 +79,27 @@
             $array[] = $newLine;
         }
         file_put_contents($filePath, implode("\n", $array), LOCK_EX);
+    }
+
+    function checkFilePath($roomName){
+
+        $privateFile = "../db/private_rooms/{$roomName}.txt";
+        $publicFile = "../db/rooms/{$roomName}.txt";
+
+        if(file_exists($privateFile)){
+            $filePath = $privateFile;
+        }elseif(file_exists($publicFile)){
+            $filePath = $publicFile;
+        }else{
+            $filePath = "";
+        }
+        return $filePath;
+    }
+
+    function getNameFiles($parentFolder){
+        $roomsFiles = glob($parentFolder . "/*.txt");
+        return $cleanRooms = array_map(function($file){
+            return basename($file, ".txt");
+        }, $roomsFiles);
     }
 ?>

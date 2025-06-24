@@ -1,11 +1,14 @@
 <?php 
 include '../utility/utilFunctions.php';
+session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["room"])){
     $roomName = $_GET["room"];
     $messages = "";
     $chatUsers = [];
-    $file = fopen("../db/rooms/{$roomName}.txt", "r");
+    $filePath = checkFilePath($roomName);
+
+    $file = fopen($filePath, "r");
     if($file){
         while(($line = fgets($file)) !== false){
             $parts = explode("|",$line);
@@ -19,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["room"])){
                 $messageWithLinks = replaceLinks($message);
 
                 ob_start();
-                include "../message-template.php";
+                include "../templates/message-template.php";
                 $messages .= ob_get_clean();
             }
         }

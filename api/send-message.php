@@ -7,6 +7,7 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["message"])){
+            $filePath = "";
 
             $currentTimestamp = time();
             $formattedDate = date('d/m/y H:i', $currentTimestamp);
@@ -14,8 +15,8 @@
             $author = $_SESSION["username"];
             $message = $_POST["message"];
             $room = $_POST["room"];
-            $dirrectory = "../db/rooms/". $room . ".txt";
-            $file = fopen($dirrectory, "a");
+            $filePath = checkFilePath($room);
+            $file = fopen($filePath, "a");
             
             $text = "{$author}|{$message}|{$formattedDate}|\n";
             fwrite($file, $text);

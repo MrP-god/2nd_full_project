@@ -1,5 +1,6 @@
 <?php 
 include '../utility/utilFunctions.php';
+session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
     $roomName = $_GET["room"];
@@ -7,7 +8,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     $messagsSent = 0;
 
     if(isset($_GET["room"])){
-        $filePath = "../db/rooms/{$roomName}.txt";
+        
+        $filePath = checkFilePath($roomName);
 
         if(file_exists($filePath)){
 
@@ -26,12 +28,14 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                     if(count($parts) >= 3){
 
                         list($author, $message, $timestamp) = $parts;
+                        // $user = $_SESSION["username"];
                         $color  = getUserColor($author);
                         $messageWithLinks = replaceLinks($message);
                         
                         // open message template
+                        
                         ob_start();
-                        include "../message-template.php";
+                        include "../templates/message-template.php";
                         $newMessages[] = ob_get_clean();
                     }
                 }

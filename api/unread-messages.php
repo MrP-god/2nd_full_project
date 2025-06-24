@@ -1,16 +1,47 @@
+<?php
+
+function findRoomFile($room) {
+    $locations = [
+        "../db/rooms/" . $room . ".txt",
+        "../db/private_rooms/" . $room . ".txt"
+    ];
+    
+    foreach ($locations as $file) {
+        if (file_exists($file)) {
+            return $file;
+        }
+    }
+    return null; // File not found in either location
+}
+
+?>
+
+
+
 <?php 
 session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
-    error_log($_GET["room"]." - [".$_SESSION["username"]."]");
+    // error_log($_GET["room"]." - [".$_SESSION["username"]."]");
     $userActivityPath = "../db/user_Activity";
-    $roomsPath = "../db/rooms";
-
+    $pathsArray = [
+        "../db/rooms",
+        "../db/private_rooms"
+    ];
+    $roomNames = [];
+  
     //get all rooms
-    $allRooms = glob($roomsPath . "/*.txt");
-    $roomNames = array_map(function($file){
-        return basename($file, ".txt");
-    }, $allRooms);
+    foreach($pathsArray as $roomsPath){
+        $currentRooms = [];
+        $allRooms = glob($roomsPath . "/*.txt");
+        $currentRooms += array_map(function($file){
+            return basename($file, ".txt");
+        }, $allRooms);
+
+        $roomNames = array_merge($roomNames, $currentRooms);
+    }
+
+    
 
     //get user Activity                                                     
     $userActivityFile = $userActivityPath . "/" . $_SESSION["username"] . "_last_read.txt";
@@ -26,9 +57,14 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     //process  room
     $unreadCount = 0;
     $lastReadTime = 0;
+
     foreach($roomNames as $room){
         if($room == $_GET["room"]){
-            $roomFile = $roomsPath . "/" . $room .".txt";
+            $roomFile = findRoomFile($room);
+            if ($roomFile === null) {
+                error_log("Room file not found!");
+            }
+            // error_log($roomFile);
             if(file_exists($roomFile)){
                 $messages = file($roomFile);
                 foreach($userActivityTime as $key => $value ){
@@ -49,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
             }
         }
     }
-    error_log($unreadCount);  
+    // error_log($unreadCount);  
     if($unreadCount > 0){
         echo $unreadCount;   
     }else{
